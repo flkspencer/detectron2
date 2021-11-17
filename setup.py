@@ -105,7 +105,7 @@ setup(
         "yacs>=0.1.6",
         "tabulate",
         "cloudpickle",
-        "matplotlib",
+        "matplotlib==3.3.4",
         "tqdm>4.29.0",
         "tensorboard",
         "imagesize",
