@@ -5,7 +5,7 @@ import pkg_resources
 import torch
 
 from detectron2.checkpoint import DetectionCheckpointer
-from detectron2.config import CfgNode, LazyConfig, get_cfg, instantiate
+from detectron2.config import CfgNode, get_cfg
 from detectron2.modeling import build_model
 
 
@@ -167,7 +167,6 @@ def get_config(config_path, trained: bool = False):
             cfg.MODEL.WEIGHTS = get_checkpoint_url(config_path)
         return cfg
     elif cfg_file.endswith(".py"):
-        cfg = LazyConfig.load(cfg_file)
         if trained:
             url = get_checkpoint_url(config_path)
             if "train" in cfg and "init_checkpoint" in cfg.train:
@@ -205,7 +204,6 @@ def get(config_path, trained: bool = False, device: Optional[str] = None):
         model = build_model(cfg)
         DetectionCheckpointer(model).load(cfg.MODEL.WEIGHTS)
     else:
-        model = instantiate(cfg.model)
         if device is not None:
             model = model.to(device)
         if "train" in cfg and "init_checkpoint" in cfg.train:
